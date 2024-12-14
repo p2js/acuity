@@ -1,0 +1,40 @@
+#sidebar {
+    /* placement */
+    float: right;
+    margin-right: 1.25em;
+    margin-top: 2em;
+    /* item grid */
+    display: grid;
+    gap: 1em;
+}
+
+#sidebar button {
+    /* center icons */
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    /* size and border */
+    width: 3em;
+    height: 3em;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+#sidebar img {
+    /* size */
+    height: 50%;
+    width: auto;
+    /* color */
+    filter: invert(45%);
+    transition: 0.05s ease-out;
+}
+
+#sidebar>button:hover>img {
+    filter: invert(30%);
+}
+
+#sidebar>button[enabled="1"] {
+    background-color: rgba(0, 0, 0, 0.1);
+}

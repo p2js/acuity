@@ -7,11 +7,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./sidebar.css">
     <title>Shrubs 2</title>
 </head>
 
 <body>
-    <script src="main.js" type="module"></script>
+    <div id="sidebar">
+        <button class="sidebar menuButton" id="menuButton" title="Menu">
+            <img src="assets/menu-icon.svg">
+        </button>
+        <button id="headerInputButton" title="Add Heading">
+            <img src="assets/heading-icon.svg">
+        </button>
+        <button id="boldInputButton" title="Toggle Bold (⌘ + B)" toggle="b">
+            <img src="assets/bold-icon.svg">
+        </button>
+        <button id="italicInputButton" title="Toggle Italic (⌘ + I)" toggle="i">
+            <img src="assets/italic-icon.svg">
+        </button>
+        <button id="underlineInputButton" title="Toggle Underline (⌘ + U)" toggle="u">
+            <img src="assets/underline-icon.svg">
+        </button>
+        <button id="equationInputButton" title="Add Equation (\)">
+            <img src="assets/eq-icon.svg"> </button>
+    </div>
+    <div id="editor">
+        <div id="overflowWrap">
+            <input type="text" id="documentTitle" placeholder="Title">
+            <span contenteditable id="main">text <b>Bold text</b></span>
+        </div>
+    </div>
+    <textarea id="debug"></textarea>
+    <script type="module" src="main.js"></script>
 </body>
 
 </html>

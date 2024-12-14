@@ -1,0 +1,99 @@
+/* font */
+
+@font-face {
+    font-family: "Segoe UI";
+    src: local("Segoe UI"), local("SegoeUI-Regular");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Segoe UI";
+    src: local("Segoe UI Semibold"), local("SegoeUI-Semibold");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Segoe UI";
+    src: local("Segoe UI Bold"), local("SegoeUI-Bold");
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* containers */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #EEE;
+}
+
+#editor {
+    padding: 2em 0;
+    display: block;
+    box-sizing: border-box;
+    margin-right: 5em;
+    height: 100vh;
+}
+
+#overflowWrap {
+    height: 100%;
+    padding-left: 5vw;
+    overflow-y: scroll;
+}
+
+/* title input */
+
+#documentTitle {
+    font-family: inherit;
+    /* title text properties*/
+    line-height: 40px;
+    color: #24292e;
+    font-weight: 600;
+    font-size: 2em;
+
+    /* placement */
+    padding-bottom: 0.75em;
+    background-color: transparent;
+    border: transparent;
+    outline: 0px;
+    box-sizing: border-box;
+    width: 100%;
+
+    /* horizontal line */
+    border-bottom: 2px solid grey;
+}
+
+#documentTitle::placeholder {
+    font-weight: normal;
+}
+
+/* main editor */
+
+#main {
+    display: block;
+    /* placement */
+    outline: 0;
+    box-sizing: border-box;
+    padding-top: 1.5em;
+    padding-bottom: 50vh;
+    font-size: 1.2em;
+}
+
+#main:empty:before {
+    content: "Type something...";
+    color: grey;
+}
+
+/* debug textarea */
+
+#debug {
+    position: absolute;
+    bottom: 0;
+    resize: none;
+    height: 2.5vw;
+    width: 50vw;
+}
