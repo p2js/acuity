@@ -1,12 +1,30 @@
+import { MathfieldElement, convertLatexToMathMl } from "//unpkg.com/mathlive?module";
+const convertMathMlToLatex = MathMLToLaTeX.MathMLToLaTeX.convert;
+
 let editor = document.getElementById("main");
+
+function insertMathFieldAtSelection() {
+    let mfe = new MathfieldElement({
+        defaultMode: "inline-math",
+    });
+
+    // insert the math field at the selection
+    const selection = document.getSelection().getRangeAt(0);
+    selection.deleteContents();
+    selection.insertNode(mfe);
+    selection.selectNodeContents(mfe);
+    selection.collapse(false);
+
+    //Set menu items to only include insertions
+    mfe.menuItems = mfe.menuItems.filter(item => Object.hasOwn(item, "id") && item.id.startsWith("insert")).reverse();
+
+    mfe.focus();
+}
 
 editor.onbeforeinput = (event) => {
     if (event.inputType == "insertText" && event.data == "\\") {
         event.preventDefault();
-
-        let selection = window.getSelection();
-        let selectionRange = selection.getRangeAt(0);
-        console.log(selectionRange);
+        insertMathFieldAtSelection();
     }
 }
 
