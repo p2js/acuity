@@ -34,7 +34,3 @@
 #sidebar>button:hover>img {
     filter: invert(30%);
 }
-
-#sidebar>button[enabled="1"] {
-    background-color: rgba(0, 0, 0, 0.1);
-}

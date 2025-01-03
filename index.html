@@ -19,13 +19,13 @@
         <button id="headerInputButton" title="Add Heading">
             <img src="assets/heading-icon.svg">
         </button>
-        <button id="boldInputButton" title="Toggle Bold (⌘ + B)" toggle="b">
+        <button id="boldInputButton" title="Toggle Bold (⌘ + B)" toggle="bold" shortcutKey="b">
             <img src="assets/bold-icon.svg">
         </button>
-        <button id="italicInputButton" title="Toggle Italic (⌘ + I)" toggle="i">
+        <button id="italicInputButton" title="Toggle Italic (⌘ + I)" toggle="italic" shortcutKey="i">
             <img src="assets/italic-icon.svg">
         </button>
-        <button id="underlineInputButton" title="Toggle Underline (⌘ + U)" toggle="u">
+        <button id="underlineInputButton" title="Toggle Underline (⌘ + U)" toggle="underline" shortcutKey="u">
             <img src="assets/underline-icon.svg">
         </button>
         <button id="equationInputButton" title="Add Equation (\)">
@@ -34,7 +34,7 @@
     <div id="editor">
         <div id="overflowWrap">
             <input type="text" id="documentTitle" placeholder="Title">
-            <span contenteditable id="main">text <b>Bold text</b></span>
+            <div contenteditable id="main"></div>
         </div>
     </div>
     <textarea id="debug"></textarea>

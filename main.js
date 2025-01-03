@@ -1,9 +1,12 @@
 let editor = document.getElementById("main");
 
 editor.onbeforeinput = (event) => {
-    console.log(event);
     if (event.inputType == "insertText" && event.data == "\\") {
         event.preventDefault();
+
+        let selection = window.getSelection();
+        let selectionRange = selection.getRangeAt(0);
+        console.log(selectionRange);
     }
 }
 
@@ -23,10 +26,24 @@ editor.onpaste = (event) => {
     document.execCommand('inserttext', false, event.clipboardData.getData('text/plain'));
 }
 
-
+// Set up shortcut and button functionality for standard text modifier buttons (bold/italic/underline)
 document.querySelectorAll("[toggle]").forEach(button => {
     let toggle = button.getAttribute("toggle");
-    button.onclick = () => {
-        button.setAttribute("enabled", (+!+button.getAttribute("enabled")));
-    }
+
+    let toggleFunction = () => { document.execCommand(toggle) };
+    button.onclick = toggleFunction;
+    //Add a shortcut if possible
+    let key = button.getAttribute("shortcutKey");
+    if (key == null) return;
+    document.addEventListener("keydown", (event) => {
+        if (event.ctrlKey && !event.shiftKey && !event.altKey && event.key == key) {
+            event.preventDefault();
+            toggleFunction();
+        }
+    });
 });
+
+// Set up functionality for header button
+document.getElementById("headerInputButton").onclick = () => {
+    document.execCommand("formatBlock", false, "<h3>");
+}
