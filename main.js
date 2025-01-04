@@ -1,24 +1,44 @@
 import { MathfieldElement, convertLatexToMathMl } from "//unpkg.com/mathlive?module";
-const convertMathMlToLatex = MathMLToLaTeX.MathMLToLaTeX.convert;
 
 let editor = document.getElementById("main");
 
 function insertMathFieldAtSelection() {
-    let mfe = new MathfieldElement({
+    let mf = new MathfieldElement({
         defaultMode: "inline-math",
     });
+
+    function convertToMathMLNode() {
+        let mathMLValue = "<math>" + convertLatexToMathMl(mf.value) + "</math>";
+        let node = document.createElement("button");
+
+        node.innerHTML = mathMLValue;
+
+        node.onclick = node.onfocus = () => {
+            node.replaceWith(mf);
+            mf.focus();
+        };
+        mf.replaceWith(node);
+    }
+
+    mf.addEventListener('beforeinput', (ev) => {
+        if (ev.inputType === 'insertLineBreak') {
+            ev.preventDefault();
+            convertToMathMLNode();
+        };
+    });
+    mf.addEventListener('focusout', () => convertToMathMLNode());
 
     // insert the math field at the selection
     const selection = document.getSelection().getRangeAt(0);
     selection.deleteContents();
-    selection.insertNode(mfe);
-    selection.selectNodeContents(mfe);
+    selection.insertNode(mf);
+    selection.selectNodeContents(mf);
     selection.collapse(false);
 
     //Set menu items to only include insertions
-    mfe.menuItems = mfe.menuItems.filter(item => Object.hasOwn(item, "id") && item.id.startsWith("insert")).reverse();
+    mf.menuItems = mf.menuItems.filter(item => Object.hasOwn(item, "id") && item.id.startsWith("insert")).reverse();
 
-    mfe.focus();
+    mf.focus();
 }
 
 editor.onbeforeinput = (event) => {
@@ -29,13 +49,19 @@ editor.onbeforeinput = (event) => {
 }
 
 editor.oninput = (event) => {
-    // Show placeholder when text is supposed to be empty
     if (event.inputType.startsWith("deleteContent")) {
+        // Show placeholder when text is supposed to be empty
         if (event.target.innerText == "\n") event.target.innerHTML = "";
+        //Trigger a click if you delete content in a button
+        let selectionRange = window.getSelection().getRangeAt(0);
+        if (selectionRange.startContainer == selectionRange.endContainer && (selectionRange.startContainer.constructor.name == "MathMLElement")) {
+            let el = selectionRange.startContainer;
+            while (el.nodeName != "BUTTON") {
+                el = el.parentNode;
+            }
+            el.onclick();
+        }
     };
-
-    // debug
-    document.getElementById("debug").value = event.target.innerHTML.trim();
 }
 
 editor.onpaste = (event) => {
