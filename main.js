@@ -2,36 +2,71 @@ import { MathfieldElement, convertLatexToMathMl } from "//unpkg.com/mathlive?mod
 
 let editor = document.getElementById("main");
 
-function insertMathFieldAtSelection() {
+// window.onbeforeunload = function (event) {
+//     event.returnValue = true;
+// };
+
+/**
+ * This toggle serves to prevent an unwanted insertParagraph event when breaking out of a math-field.
+ * The toggle is set to true inside the math field beforeinput event code.
+ * 
+ * This code really does not spark joy, so if you know another way to prevent 
+ * an unwanted event firing off from pressing a key when moving out of an element, 
+ * I beg you to reach out to me.
+ */
+editor.doNotInsertParagraph = false;
+editor.addEventListener("beforeinput", (event) => {
+    if (event.inputType == "insertParagraph" && editor.doNotInsertParagraph) {
+        event.preventDefault();
+        editor.doNotInsertParagraph = false;
+    }
+});
+
+function createMathFieldAtSelection() {
+    // Wrap the math-field in a non-contenteditable span to avoid conflicts with the shadow DOM
+    let wrapper = document.createElement("span");
+    wrapper.contentEditable = "false";
     let mf = new MathfieldElement({
         defaultMode: "inline-math",
     });
+    wrapper.appendChild(mf);
 
-    function convertToMathMLNode() {
-        let mathMLValue = "<math>" + convertLatexToMathMl(mf.value) + "</math>";
-        let node = document.createElement("button");
-
-        node.innerHTML = mathMLValue;
-
-        node.onclick = node.onfocus = () => {
-            node.replaceWith(mf);
-            mf.focus();
-        };
-        mf.replaceWith(node);
+    // Function to position the caret immediately after the math-field when breaking out of it
+    function setCaretAfter() {
+        let selection = window.getSelection();
+        selection.removeAllRanges();
+        let newRange = document.createRange();
+        newRange.selectNode(wrapper);
+        selection.addRange(newRange);
+        selection.collapseToEnd();
     }
 
-    mf.addEventListener('beforeinput', (ev) => {
-        if (ev.inputType === 'insertLineBreak') {
-            ev.preventDefault();
-            convertToMathMLNode();
-        };
+    // Remove math-field if empty when focused out of
+    mf.addEventListener('focusout', () => {
+        if (mf.value == "") wrapper.remove();
     });
-    mf.addEventListener('focusout', () => convertToMathMLNode());
+
+    // Break out on tab
+    mf.addEventListener("keydown", (event) => {
+        if (event.key == "Tab") {
+            event.preventDefault();
+            setCaretAfter();
+        }
+    });
+
+    //Break out on enter press
+    mf.addEventListener("beforeinput", (event) => {
+        if (event.inputType === 'insertLineBreak') {
+            event.preventDefault();
+            editor.doNotInsertParagraph = true;
+            setCaretAfter();
+        }
+    });
 
     // insert the math field at the selection
     const selection = document.getSelection().getRangeAt(0);
     selection.deleteContents();
-    selection.insertNode(mf);
+    selection.insertNode(wrapper);
     selection.selectNodeContents(mf);
     selection.collapse(false);
 
@@ -41,34 +76,27 @@ function insertMathFieldAtSelection() {
     mf.focus();
 }
 
-editor.onbeforeinput = (event) => {
+// editor.addEventListener("beforeinput", console.log)
+
+editor.addEventListener("beforeinput", (event) => {
     if (event.inputType == "insertText" && event.data == "\\") {
         event.preventDefault();
-        insertMathFieldAtSelection();
+        createMathFieldAtSelection();
     }
-}
+});
 
-editor.oninput = (event) => {
+editor.addEventListener("input", (event) => {
+    // Show placeholder when the editor is supposed to be empty
     if (event.inputType.startsWith("deleteContent")) {
-        // Show placeholder when text is supposed to be empty
         if (event.target.innerText == "\n") event.target.innerHTML = "";
-        //Trigger a click if you delete content in a button
-        let selectionRange = window.getSelection().getRangeAt(0);
-        if (selectionRange.startContainer == selectionRange.endContainer && (selectionRange.startContainer.constructor.name == "MathMLElement")) {
-            let el = selectionRange.startContainer;
-            while (el.nodeName != "BUTTON") {
-                el = el.parentNode;
-            }
-            el.onclick();
-        }
     };
-}
+})
 
-editor.onpaste = (event) => {
+editor.addEventListener("paste", (event) => {
     // Makes sure clipboard data is pasted in plain text
     event.preventDefault();
     document.execCommand('inserttext', false, event.clipboardData.getData('text/plain'));
-}
+});
 
 // Set up shortcut and button functionality for standard text modifier buttons (bold/italic/underline)
 document.querySelectorAll("[toggle]").forEach(button => {
