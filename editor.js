@@ -1,4 +1,4 @@
-import { MathfieldElement, convertLatexToMathMl } from "//unpkg.com/mathlive?module";
+import { MathfieldElement } from "//unpkg.com/mathlive?module";
 
 let editor = document.getElementById("main");
 
@@ -76,34 +76,26 @@ function createMathFieldAtSelection() {
     mf.focus();
 }
 
-// editor.addEventListener("beforeinput", console.log)
-
-editor.addEventListener("beforeinput", (event) => {
-    if (event.inputType == "insertText" && event.data == "\\") {
-        event.preventDefault();
-        createMathFieldAtSelection();
-    }
+// Show placeholder when the editor is supposed to be empty
+editor.addEventListener("input", (event) => {
+    if (event.inputType.startsWith("deleteContent") && event.target.innerText == "\n") {
+        event.target.innerHTML = "";
+    };
 });
 
-editor.addEventListener("input", (event) => {
-    // Show placeholder when the editor is supposed to be empty
-    if (event.inputType.startsWith("deleteContent")) {
-        if (event.target.innerText == "\n") event.target.innerHTML = "";
-    };
-})
-
+// Ensure clipboard data is pasted in plain text
 editor.addEventListener("paste", (event) => {
-    // Makes sure clipboard data is pasted in plain text
     event.preventDefault();
     document.execCommand('inserttext', false, event.clipboardData.getData('text/plain'));
 });
 
-// Set up shortcut and button functionality for standard text modifier buttons (bold/italic/underline)
+// Set up shortcut and button functionality for text modifiers (heading, bold, italic, underline)
 document.querySelectorAll("[toggle]").forEach(button => {
     let toggle = button.getAttribute("toggle");
 
-    let toggleFunction = () => { document.execCommand(toggle) };
-    button.onclick = toggleFunction;
+    let toggleFunction = () => { document.execCommand(toggle, false, "<h3>") };
+    button.addEventListener("click", toggleFunction);
+
     //Add a shortcut if possible
     let key = button.getAttribute("shortcutKey");
     if (key == null) return;
@@ -115,7 +107,18 @@ document.querySelectorAll("[toggle]").forEach(button => {
     });
 });
 
-// Set up functionality for header button
-document.getElementById("headerInputButton").onclick = () => {
-    document.execCommand("formatBlock", false, "<h3>");
-}
+// Set up \ key functionality
+editor.addEventListener("beforeinput", (event) => {
+    if (event.inputType == "insertText" && event.data == "\\") {
+        event.preventDefault();
+        createMathFieldAtSelection();
+    }
+});
+
+// Set up functionality for the equation input button
+document.getElementById("equationInputButton").addEventListener("click", () => {
+    let isFocusedOnEditor = editor.contains(window.getSelection().getRangeAt(0).commonAncestorContainer);
+    if (isFocusedOnEditor) {
+        createMathFieldAtSelection();
+    }
+});

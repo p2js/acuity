@@ -87,13 +87,3 @@ body {
     content: "Type something...";
     color: grey;
 }
-
-/* debug textarea */
-
-#debug {
-    position: absolute;
-    bottom: 0;
-    resize: none;
-    height: 2.5vw;
-    width: 50vw;
-}
