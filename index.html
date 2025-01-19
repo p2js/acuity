@@ -9,36 +9,54 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./sidebar.css">
     <link rel="stylesheet" href="./math.css">
-    <title>Shrubs</title>
+    <title>mn</title>
 </head>
 
 <body>
     <div id="sidebar">
-        <button class="sidebar menuButton" id="menuButton" title="Menu">
-            <img src="assets/menu-icon.svg">
-        </button>
-        <button id="headerInputButton" title="Add Heading (⌘ + H)" toggle="formatBlock" shortcutkey="h">
+        <div id="menu">
+            <button class="sidebarButton" id="menuButton" title="Menu">
+                <img src="assets/menu-icon.svg">
+            </button>
+            <div id="menuContent" class="menu-content">
+                <button id="menuNew">New...
+                    <!-- <span class="shortcut">⌘+N</span> -->
+                </button>
+                <button id="menuOpen">Open... <span class="shortcut">⌘+O</span></button>
+                <button id="menuSave">Save... <span class="shortcut">⌘+S</span></button>
+                <button id="menuAbout">About (Name TBD)...</button>
+            </div>
+        </div>
+        <button class="sidebarButton" id="headerInputButton" title="Add Heading (⌘+H)" toggle="formatBlock"
+            shortcutkey="h">
             <img src="assets/heading-icon.svg">
         </button>
-        <button id="boldInputButton" title="Toggle Bold (⌘ + B)" toggle="bold" shortcutKey="b">
+        <button class="sidebarButton" id="boldInputButton" title="Toggle Bold (⌘+B)" toggle="bold" shortcutKey="b">
             <img src="assets/bold-icon.svg">
         </button>
-        <button id="italicInputButton" title="Toggle Italic (⌘ + I)" toggle="italic" shortcutKey="i">
+        <button class="sidebarButton" id="italicInputButton" title="Toggle Italic (⌘+I)" toggle="italic"
+            shortcutKey="i">
             <img src="assets/italic-icon.svg">
         </button>
-        <button id="underlineInputButton" title="Toggle Underline (⌘ + U)" toggle="underline" shortcutKey="u">
+        <button class="sidebarButton" id="underlineInputButton" title="Toggle Underline (⌘+U)" toggle="underline"
+            shortcutKey="u">
             <img src="assets/underline-icon.svg">
         </button>
-        <button id="equationInputButton" title="Add Equation (\)">
+        <button class="sidebarButton" id="equationInputButton" title="Add Equation (\)">
             <img src="assets/eq-icon.svg"> </button>
     </div>
     <div id="editor">
         <div id="overflowWrap">
-            <input type="text" id="documentTitle" placeholder="Title">
+            <input type="text" id="documentTitle" placeholder="Title" autocomplete='off'>
             <div contenteditable id="main"></div>
         </div>
     </div>
+    <dialog id="about">
+        <form method="dialog" autofocus><button>X</button></form>
+        todo
+    </dialog>
     <script type="module" src="editor.js"></script>
+    <script type="module" src="menu.js"></script>
 </body>
 
 </html>

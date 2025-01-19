@@ -8,7 +8,7 @@
     gap: 1em;
 }
 
-#sidebar button {
+.sidebarButton {
     /* center icons */
     display: inline-grid;
     align-items: center;
@@ -20,6 +20,7 @@
     border: none;
     border-radius: 5px;
     background-color: transparent;
+    cursor: pointer;
 }
 
 #sidebar img {
@@ -31,6 +32,55 @@
     transition: 0.05s ease-out;
 }
 
-#sidebar>button:hover>img {
+.sidebarButton:hover>img {
     filter: invert(30%);
+}
+
+.menu {
+    float: right;
+    position: relative;
+}
+
+
+
+.menu-content {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 0.2em;
+    background-color: #EEE;
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-right: 1.5em;
+    width: 10em;
+    z-index: 1;
+    /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+}
+
+.show {
+    display: grid;
+}
+
+.menu-content button {
+    color: #222;
+    font-size: 0.9em;
+    border-radius: 5px;
+    background-color: #EEE;
+    text-align: left;
+    border: none;
+    width: 100%;
+    padding: 0.5em 1em;
+}
+
+.menu-content button:hover {
+    background-color: #DDD;
+}
+
+.shortcut {
+    float: right;
+    color: #777;
+}
+
+#about {
+    position: absolute;
 }
