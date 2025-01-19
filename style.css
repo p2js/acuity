@@ -22,20 +22,27 @@
 }
 
 /* containers */
+:root {
+    background-color: #EEE;
+}
+
+body,
+button {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    margin: auto;
+    max-width: 80em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #EEE;
 }
 
 #editor {
     padding: 2em 0;
     display: block;
     box-sizing: border-box;
-    margin-right: 5em;
+    margin-right: 4.5em;
     height: 100vh;
 }
 
@@ -43,6 +50,8 @@ body {
     height: 100%;
     padding-left: 5vw;
     overflow-y: scroll;
+    scrollbar-width: thin;
+    padding-right: 0.75em;
 }
 
 /* title input */
@@ -86,4 +95,47 @@ body {
 #main:empty:before {
     content: "Type something...";
     color: grey;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+#main>div {
+    margin-bottom: 0.75em;
+}
+
+#about {
+    border: 1px solid #CCC;
+    background-color: #EEE;
+}
+
+/* Math */
+
+math-field::part(virtual-keyboard-toggle),
+math-field::part(menu-toggle) {
+    display: none;
+}
+
+math-field {
+    outline: 0px;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 0em;
+    padding-bottom: 0em;
+    min-width: 1em;
+    font-size: 1em;
+    border-radius: 0;
+    border: transparent;
+    transition: border-bottom 0.1s ease-out;
+}
+
+math-field:empty::before {
+    border-bottom: 2px solid #999;
+}
+
+math-field:focus-within,
+math-field:hover {
+    outline: 0px;
+    border-bottom: 2px solid #4B7AAF;
 }
