@@ -1,5 +1,4 @@
 /* font */
-
 @font-face {
     font-family: "Segoe UI";
     src: local("Segoe UI"), local("SegoeUI-Regular");
@@ -55,7 +54,6 @@ body {
 }
 
 /* title input */
-
 #documentTitle {
     font-family: inherit;
     /* title text properties*/
@@ -81,7 +79,6 @@ body {
 }
 
 /* main editor */
-
 #main {
     display: block;
     /* placement */
@@ -110,8 +107,7 @@ h3 {
     background-color: #EEE;
 }
 
-/* Math */
-
+/* math */
 math-field::part(virtual-keyboard-toggle),
 math-field::part(menu-toggle) {
     display: none;

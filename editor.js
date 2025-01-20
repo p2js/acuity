@@ -8,6 +8,15 @@ if (location.hostname != "localhost") {
         event.returnValue = true;
     }
 }
+// Set the title to the value of the document title
+document.getElementById("documentTitle").addEventListener("change", (event) => {
+    let title = "Acuity"
+    if (event.target.value) {
+        title = event.target.value + " - " + title
+    }
+    document.title = title;
+});
+
 /**
  * This toggle serves to prevent an unwanted insertParagraph event when breaking out of a math-field.
  * The toggle is set to true inside the math field beforeinput event code.

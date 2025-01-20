@@ -20,7 +20,7 @@ function nodeContentToString(node) {
         if (childNode.tagName == "SPAN") {
             let mathfield = childNode.firstChild;
             if (mathfield != null && mathfield.tagName == "MATH-FIELD") {
-                nodeContent += "<math>" + convertLatexToMathMl(mathfield.value) + "</math>";
+                nodeContent += "<math ltx='" + mathfield.value + "'>" + convertLatexToMathMl(mathfield.value) + "</math>";
             }
             continue;
         }
@@ -48,11 +48,9 @@ function saveDocument() {
 </head>
 <body>
 <h1>${title}</h1><div id="main">${bodyContent}</div>
-<style>@font-face{font-family:"Segoe UI";src:local("Segoe UI"),local("SegoeUI-Regular");font-weight: 400;font-style: normal;}@font-face {font-family:"Segoe UI";src:local("Segoe UI Semibold"),local("SegoeUI-Semibold");font-weight:600;font-style:normal;}@font-face {font-family:"Segoe UI";src:local("Segoe UI Bold"),local("SegoeUI-Bold");font-weight:700;font-style:normal;}:root{background-color:#eee;}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:black;margin:auto;padding:3em;max-width:70em;
-}h1 {line-height:40px;font-size:2em;padding-bottom:0.75em;border-bottom:2px solid grey;}h1,h3 {font-weight:600;}#main{font-size:1.2em;}#main>div{margin-bottom:0.75em;}math{font-family:'Cambria Math','Times New Roman',serif}</style>
+<style>@font-face{font-family:"Segoe UI";src:local("Segoe UI"),local("SegoeUI-Regular");font-weight:400;font-style:normal;}@font-face{font-family:"Segoe UI";src:local("Segoe UI Semibold"),local("SegoeUI-Semibold");font-weight:600;font-style:normal;}@font-face{font-family:"Segoe UI";src:local("Segoe UI Bold"),local("SegoeUI-Bold");font-weight:700;font-style:normal;}:root{background-color:#eee;}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:black;margin:auto;padding:3em;max-width:70em;}h1{line-height:40px;font-size:2em;margin-top:0;padding-bottom:0.75em;border-bottom:2px solid grey;}h1,h3{font-weight:600;}#main{font-size:1.2em;}#main>div{margin-bottom:0.75em;}math{font-family:'Cambria Math','Times New Roman',serif}</style>
 </body>
 </html>`;
-
     let anchor = document.createElement("a");
     anchor.href = "data:application/xml;charset=utf-8," + encodeURIComponent(htmldoc);
     anchor.download = title + ".html";

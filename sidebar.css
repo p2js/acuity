@@ -41,8 +41,6 @@
     position: relative;
 }
 
-
-
 .menu-content {
     border: 1px solid #CCC;
     border-radius: 5px;
@@ -83,4 +81,5 @@
 
 #about {
     position: absolute;
+    border-radius: 10px;
 }
