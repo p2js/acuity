@@ -1,15 +1,10 @@
 import { MathfieldElement } from "//unpkg.com/mathlive?module";
 
 let editor = document.getElementById("main");
+let editorTitle = document.getElementById("documentTitle");
 
-// Make sure the website warns on reload
-if (location.hostname != "localhost") {
-    window.onbeforeunload = (event) => {
-        event.returnValue = true;
-    }
-}
 // Set the title to the value of the document title
-document.getElementById("documentTitle").addEventListener("change", (event) => {
+editorTitle.addEventListener("change", (event) => {
     let title = "Acuity"
     if (event.target.value) {
         title = event.target.value + " - " + title
@@ -33,13 +28,14 @@ editor.addEventListener("beforeinput", (event) => {
     }
 });
 
-function createMathFieldAtSelection() {
+export function createMathFieldAtSelection(initialValue = "") {
     // Wrap the math-field in a non-contenteditable span to avoid conflicts with the shadow DOM
     let wrapper = document.createElement("span");
     wrapper.contentEditable = "false";
     let mf = new MathfieldElement({
         defaultMode: "inline-math",
     });
+    mf.value = initialValue;
     wrapper.appendChild(mf);
     // Function to position the caret immediately after the math-field when breaking out of it
     function setCaretAfter() {
@@ -106,11 +102,14 @@ document.querySelectorAll("[toggle]").forEach(button => {
         }
     });
 });
+// Ensure sidebar buttons don't break focus
+document.querySelectorAll(".sidebarButton").forEach((button) => button.addEventListener("mousedown", (event) => { event.preventDefault() }))
 // Set up \ key functionality
 editor.addEventListener("beforeinput", (event) => {
     if (event.inputType == "insertText" && event.data == "\\") {
         event.preventDefault();
         createMathFieldAtSelection();
+
     }
 });
 // Set up functionality for the equation input button
