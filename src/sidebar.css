@@ -23,21 +23,20 @@
     cursor: pointer;
 }
 
-#sidebar img {
+.sidebarButton img {
     /* size */
     height: 50%;
     width: auto;
     /* color */
     filter: invert(45%);
-    transition: 0.05s ease-out;
+    transition: 0.1s ease-out;
 }
 
 .sidebarButton:hover>img {
     filter: invert(30%);
 }
 
-.menu {
-    float: right;
+#menu {
     position: relative;
 }
 
@@ -49,7 +48,6 @@
     display: none;
     position: absolute;
     right: 0;
-    margin-right: 1.5em;
     width: 10em;
     z-index: 1;
     /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
@@ -82,4 +80,5 @@
 #about {
     position: absolute;
     border-radius: 10px;
+    color: #EEE;
 }
