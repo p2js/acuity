@@ -1,3 +1,5 @@
+<img src="readme-assets/logo.png" alt="Acuity: Math Notes, with ease" height="200">
+
 ## About
 
 Acuity is a note-taking app focused on mathematical notes. It aims to provide a minimalist editor with an intuitive and efficient way to incorporate complex mathematical formulas.
@@ -11,6 +13,8 @@ In order to make notes easily viewable and shareable, all notes are saved and ex
 Currently, the editor is not hosted anywhere, but you are welcome to host it yourself with a simple HTTP server on your local machine.
 
 In a document, use the sidebar buttons or indicated shortcuts to use text modifiers or bring up an equation input.
+
+<img src="readme-assets/ui.png" height="350" alt="Screenshot of the Acuity UI">
 
 ## License
 
